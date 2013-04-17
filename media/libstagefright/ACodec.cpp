@@ -43,10 +43,6 @@
 #include <sec_format.h>
 #endif
 
-#ifdef USE_SAMSUNG_COLORFORMAT
-#include <sec_format.h>
-#endif
-
 #include "include/avc_utils.h"
 
 namespace android {

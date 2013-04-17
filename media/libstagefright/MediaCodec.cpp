@@ -302,20 +302,6 @@ status_t MediaCodec::getOutputFormat(sp<AMessage> *format) const {
     return OK;
 }
 
-status_t MediaCodec::getName(AString *name) const {
-    sp<AMessage> msg = new AMessage(kWhatGetName, id());
-
-    sp<AMessage> response;
-    status_t err;
-    if ((err = PostAndAwaitResponse(msg, &response)) != OK) {
-        return err;
-    }
-
-    CHECK(response->findString("name", name));
-
-    return OK;
-}
-
 status_t MediaCodec::getInputBuffers(Vector<sp<ABuffer> > *buffers) const {
     sp<AMessage> msg = new AMessage(kWhatGetBuffers, id());
     msg->setInt32("portIndex", kPortIndexInput);
@@ -548,15 +534,16 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
                     CHECK_EQ(mState, INITIALIZING);
                     setState(INITIALIZED);
 
-                    CHECK(msg->findString("componentName", &mComponentName));
+                    AString componentName;
+                    CHECK(msg->findString("componentName", &componentName));
 
-                    if (mComponentName.startsWith("OMX.google.")) {
+                    if (componentName.startsWith("OMX.google.")) {
                         mFlags |= kFlagIsSoftwareCodec;
                     } else {
                         mFlags &= ~kFlagIsSoftwareCodec;
                     }
 
-                    if (mComponentName.endsWith(".secure")) {
+                    if (componentName.endsWith(".secure")) {
                         mFlags |= kFlagIsSecure;
                     } else {
                         mFlags &= ~kFlagIsSecure;
@@ -1184,25 +1171,6 @@ void MediaCodec::onMessageReceived(const sp<AMessage> &msg) {
             break;
         }
 
-        case kWhatGetName:
-        {
-            uint32_t replyID;
-            CHECK(msg->senderAwaitsResponse(&replyID));
-
-            if (mComponentName.empty()) {
-                sp<AMessage> response = new AMessage;
-                response->setInt32("err", INVALID_OPERATION);
-
-                response->postReply(replyID);
-                break;
-            }
-
-            sp<AMessage> response = new AMessage;
-            response->setString("name", mComponentName.c_str());
-            response->postReply(replyID);
-            break;
-        }
-
         default:
             TRESPASS();
     }
@@ -1270,10 +1238,6 @@ void MediaCodec::setState(State newState) {
         mFlags &= ~kFlagStickyError;
 
         mActivityNotify.clear();
-    }
-
-    if (newState == UNINITIALIZED) {
-        mComponentName.clear();
     }
 
     mState = newState;

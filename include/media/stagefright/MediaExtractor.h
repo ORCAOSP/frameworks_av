@@ -69,7 +69,7 @@ public:
     }
 
 protected:
-    MediaExtractor() : mIsDrm(false) {}
+    MediaExtractor() {}
     virtual ~MediaExtractor() {}
 
 private:

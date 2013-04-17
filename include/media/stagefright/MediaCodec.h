@@ -113,8 +113,6 @@ struct MediaCodec : public AHandler {
     // pending, an error is pending.
     void requestActivityNotification(const sp<AMessage> &notify);
 
-    status_t getName(AString *componentName) const;
-
 protected:
     virtual ~MediaCodec();
     virtual void onMessageReceived(const sp<AMessage> &msg);
@@ -156,7 +154,6 @@ private:
         kWhatCodecNotify                    = 'codc',
         kWhatRequestIDRFrame                = 'ridr',
         kWhatRequestActivityNotification    = 'racN',
-        kWhatGetName                        = 'getN',
     };
 
     enum {
@@ -181,7 +178,6 @@ private:
     sp<ALooper> mLooper;
     sp<ALooper> mCodecLooper;
     sp<ACodec> mCodec;
-    AString mComponentName;
     uint32_t mReplyID;
     uint32_t mFlags;
     sp<SurfaceTextureClient> mNativeWindow;

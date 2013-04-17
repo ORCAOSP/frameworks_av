@@ -88,8 +88,7 @@ public:
 class VideoFrame
 {
 public:
-    VideoFrame(): mWidth(0), mHeight(0), mDisplayWidth(0), mDisplayHeight(0), mSize(0), mData(0),
-            mRotationAngle(0) {}
+    VideoFrame(): mWidth(0), mHeight(0), mDisplayWidth(0), mDisplayHeight(0), mSize(0), mData(0) {}
 
     VideoFrame(const VideoFrame& copy) {
         mWidth = copy.mWidth;
@@ -106,7 +105,6 @@ public:
                 mSize = 0;
             }
         }
-        mRotationAngle = copy.mRotationAngle;
     }
 
     ~VideoFrame() {

@@ -18,9 +18,6 @@
 #define LOG_TAG "AudioParameter"
 //#define LOG_NDEBUG 0
 
-//Fix
-#define AUDIO_PARAMETER_KEY_ADSP_STATUS "ADSP_STATUS"
-
 #include <utils/Log.h>
 
 #include <hardware/audio.h>
