@@ -96,8 +96,9 @@ struct QCOMXCodec {
 
     static void     checkIfInterlaced(const uint8_t *ptr, const sp<MetaData> &meta);
 
+    static bool     useHWAACDecoder(const char *mime);
+
 };
 
 }
 #endif /*QC_OMX_CODEC_H_ */
-

@@ -99,10 +99,13 @@ private:
     status_t addTypeFromAttributes(const char **attrs);
     void addType(const char *name);
 
+#ifdef QCOM_HARDWARE
+    friend class QCUtilityClass;
+#endif
+
     DISALLOW_EVIL_CONSTRUCTORS(MediaCodecList);
 };
 
 }  // namespace android
 
 #endif  // MEDIA_CODEC_LIST_H_
-
