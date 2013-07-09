@@ -102,3 +102,4 @@ struct QCOMXCodec {
 
 }
 #endif /*QC_OMX_CODEC_H_ */
+

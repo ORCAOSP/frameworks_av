@@ -2229,7 +2229,7 @@ void AwesomePlayer::postCheckAudioStatusEvent(int64_t delayUs) {
         delayUs = 0;
     }
 #endif
-    
+
     // Do not honor delay when looping in order to limit audio gap
     if (mFlags & (LOOPING | AUTO_LOOPING)) {
         delayUs = 0;
